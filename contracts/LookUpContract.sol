@@ -88,7 +88,17 @@ contract LookUpContract {
             _tokenTransactionHash
         );
     }
-    
 
-
+    function getAllERC20TokenListed() public view returns (ER20Token[] memory) {
+        uint256 itemCount = _tokenIndex;
+        uint256 currentIndex = 0;
+        ER20Token[] memory items = new ER20Token[](itemCount);
+        for (uint256 i = 1; i <= itemCount; i++) {
+            uint256 currentId = i + 1;
+            ER20Token storage currentItem = erc20Tokens[currentId];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+        }
+        return items;
+    }
 }

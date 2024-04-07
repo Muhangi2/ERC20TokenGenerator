@@ -9,7 +9,7 @@ contract LookUpContract {
         string tokenSupply;
         string tokenName;
         string tokenSymbol;
-        address tokenAddress;
+        string tokenAddress;
         string TokenTransactionHash;
         string tokenCreatedDate;
     }
@@ -100,5 +100,35 @@ contract LookUpContract {
             currentIndex += 1;
         }
         return items;
+    }
+    //fetting single ERC20 token
+    function getSingleERC20Token(
+        uint256 _tokenId
+    )
+        external
+        view
+        returns (
+            uint256,
+            address,
+            string memory,
+            string memory,
+            string memory,
+            string memory,
+            string memory,
+            string memory
+        )
+    {
+        ER20Token memory erc20Token = erc20Tokens[_tokenId];
+
+        return (
+            erc20Token.tokenId,
+            erc20Token.owner,
+            erc20Token.tokenSupply,
+            erc20Token.tokenName,
+            erc20Token.tokenSymbol,
+            erc20Token.tokenAddress,
+            erc20Token.TokenTransactionHash,
+            erc20Token.tokenCreatedDate
+        );
     }
 }

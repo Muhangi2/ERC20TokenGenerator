@@ -162,40 +162,42 @@ contract LookUpContract {
         return listingPrice;
     }
     //set updating  price
-    function updatingListPrice(uint256 _listingPrice,address _owner) public payable onlyOwner {
-    require(contractOwner==_owner,"Only owner can call this function");
+    function updatingListPrice(
+        uint256 _listingPrice,
+        address _owner
+    ) public payable onlyOwner {
+        require(contractOwner == _owner, "Only owner can call this function");
         listingPrice = _listingPrice;
     }
-    function withdraw() external onlyOwner{
-        uint256 balance=address(this).balance;
-        require(balance>0,"Contract has no balance");
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "Contract has no balance");
         payable(contractOwner).transfer(balance);
     }
-    function getContractBalance() external view onlyOwner returns(uint256){
+    function getContractBalance() external view onlyOwner returns (uint256) {
         return address(this).balance;
     }
-     //donation now 
-     function donate () public payable {
+    //donation now
+    function donate() public payable {
         require(msg.value > 0, "Donation amount must be greater than 0");
         _donationIndex++;
         uint256 _donationId = _donationIndex;
         Donation storage donation = donations[_donationId];
-        donation.donationId=_donationId;
+        donation.donationId = _donationId;
         donation.donor = msg.sender;
         donation.amount = msg.value;
         emit DonationReceived(msg.sender, msg.value);
-     }
-        function getDonations() public view onlyOwner returns(Donation[] memory){
-            uint256 itemCount = _donationIndex;
-            uint256 currentIndex = 0;
-            Donation[] memory items = new Donation[](itemCount);
-            for (uint256 i = 1; i <= itemCount; i++) {
-                uint256 currentId = i + 1;
-                Donation storage currentItem = donations[currentId];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
-            }
-            return items;
+    }
+    function getDonations() public view onlyOwner returns (Donation[] memory) {
+        uint256 itemCount = _donationIndex;
+        uint256 currentIndex = 0;
+        Donation[] memory items = new Donation[](itemCount);
+        for (uint256 i = 1; i <= itemCount; i++) {
+            uint256 currentId = i + 1;
+            Donation storage currentItem = donations[currentId];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
         }
+        return items;
+    }
 }
-

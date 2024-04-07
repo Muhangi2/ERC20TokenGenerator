@@ -161,5 +161,9 @@ contract LookUpContract {
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
     }
-    //set listing price
+    //set updating  price
+    function updatingListPrice(uint256 _listingPrice,address _owner) public payable onlyOwner {
+    require(contractOwner==_owner,"Only owner can call this function");
+        listingPrice = _listingPrice;
+    }
 }

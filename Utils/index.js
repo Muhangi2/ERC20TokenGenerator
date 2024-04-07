@@ -82,8 +82,8 @@ export const connectingTokenContract = async () => {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
-    const contrat = fetchTokenContract(signer);
-    return contrat;
+    const contract = fetchTokenContract(signer);
+    return contract;
   } catch (error) {
     console.log(error);
   }

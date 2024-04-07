@@ -36,5 +36,6 @@ Alchemy will provide you with some free test faucets which you can transfer to y
 
 
 
-
+ERC20Generator deployed to: 0x4F6669cBFEA435425542594025e3bcBa4849671a
+LookUpContract deployed to: 0x7E4C2a0a182fC4AB4E1D13bdcAF86B60B0C206d9
 

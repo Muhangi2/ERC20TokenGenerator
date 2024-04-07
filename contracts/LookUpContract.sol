@@ -166,4 +166,14 @@ contract LookUpContract {
     require(contractOwner==_owner,"Only owner can call this function");
         listingPrice = _listingPrice;
     }
+    function withdraw() external onlyOwner{
+        uint256 balance=address(this).balance;
+        require(balance>0,"Contract has no balance");
+        payable(contractOwner).transfer(balance);
+    }
+    function getContractBalance() external view onlyOwner returns(uint256){
+        return address(this).balance;
+    }
+    
 }
+

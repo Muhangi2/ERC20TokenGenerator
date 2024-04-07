@@ -46,12 +46,11 @@ contract LookUpContract {
     }
     //creating a new ERC20 token
     function createERC20Token(
-        uint256 _tokenId,
         address _owner,
         string memory _tokenSupply,
         string memory _tokenName,
         string memory _tokenSymbol,
-        address _tokenAddress,
+        string memory _tokenAddress,
         string memory _tokenTransactionHash,
         string memory _tokenCreatedDate
     )
@@ -67,8 +66,9 @@ contract LookUpContract {
         )
     {
         _tokenIndex++;
-        uint256 _tokenid = _tokenIndex;
-        ER20Token storage erc20Token = erc20Tokens[_tokenid];
+        uint256 _tokenId = _tokenIndex;
+        ER20Token storage erc20Token = erc20Tokens[_tokenId];
+
         erc20Token.owner = _owner;
         erc20Token.tokenId = _tokenId;
         erc20Token.tokenSupply = _tokenSupply;
@@ -77,6 +77,7 @@ contract LookUpContract {
         erc20Token.tokenAddress = _tokenAddress;
         erc20Token.TokenTransactionHash = _tokenTransactionHash;
         erc20Token.tokenCreatedDate = _tokenCreatedDate;
+
         emit ERC20TokenListed(_tokenId, _owner, _tokenName);
 
         return (

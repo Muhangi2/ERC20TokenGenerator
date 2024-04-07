@@ -21,17 +21,70 @@ export const checkIfWalletIsConnected = async () => {
   }
 };
 export const connectWallet = async () => {
-    try {
-      if (!window.ethereum) return console.log("install metamask Wallet");
-  
-      const accounts = await window.ethereum.request({ method: "eth_accounts" });
-      const firstaccount = accounts[0];
-      return firstaccount;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
-  const fetchContract=(Signerorprovider)=>new ethers.Contract(LookUpContract_ADDRESS,LookUpContract_ABI,Signerorprovider)
+  try {
+    if (!window.ethereum) return console.log("install metamask Wallet");
 
-  
+    const accounts = await window.ethereum.request({ method: "eth_accounts" });
+    const firstaccount = accounts[0];
+    return firstaccount;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const fetchContract = (Signerorprovider) =>
+  new ethers.Contract(
+    LookUpContract_ADDRESS,
+    LookUpContract_ABI,
+    Signerorprovider
+  );
+
+export const connectingToLookUpContract = async () => {
+  try {
+    const web3modal = new web3modal();
+    const connection = await web3modal.connect();
+
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    const contrat = fetchContract(signer);
+    return contrat;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBalanace = async () => {
+  try {
+    const web3modal = new web3modal();
+    const connection = await web3modal.connect();
+
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    return await signer.getBalance();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//lets now deal with trhe tokencontract
+const fetchTokenContract = (Signerorprovider) =>
+  new ethers.Contract(
+    ER20Generator_ADDRESS,
+    ERC20Generator_ABI,
+    Signerorprovider
+  );
+export const connectingTokenContract = async () => {
+  try {
+    const web3modal = new web3modal();
+    const connection = await web3modal.connect();
+
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    const contrat = fetchTokenContract(signer);
+    return contrat;
+  } catch (error) {
+    console.log(error);
+  }
+};

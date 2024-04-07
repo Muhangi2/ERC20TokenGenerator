@@ -131,4 +131,30 @@ contract LookUpContract {
             erc20Token.tokenCreatedDate
         );
     }
+    //get usertokens
+    function getUserTokens(
+        address _owner
+    ) external view returns (ER20Token[] memory) {
+        uint256 totalitemcount = _tokenIndex;
+        uint256 itemCount = 0;
+        uint256 currentIndex = 0;
+
+        for (uint256 i = 0; i < totalitemcount; i++) {
+            if (erc20Tokens[i].owner == _owner) {
+                itemCount += 1;
+            }
+        }
+
+        ER20Token[] memory items = new ER20Token[](itemCount);
+
+        for (uint256 i = 0; i < totalitemcount; i++) {
+            if (erc20Tokens[i + 1].owner == _owner) {
+                uint256 currentId = i + 1;
+                ER20Token storage currentItem = erc20Tokens[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+        return items;
+    }
 }

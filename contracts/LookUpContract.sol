@@ -157,4 +157,9 @@ contract LookUpContract {
         }
         return items;
     }
+    ///get listing price
+    function getListingPrice() public view returns (uint256) {
+        return listingPrice;
+    }
+    //set listing price
 }

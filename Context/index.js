@@ -140,7 +140,15 @@ const _deployContract = async (signer, account, name, symbol, supply) => {
     const _tokenCreatedDate = date.toLocaleDateString('en-US');
 
     if(contract.address){
-      await createERC20Token()
+      await createERC20Token(
+         account,
+         supply,
+         name,
+         symbol,
+         contract.address,//from deployed address
+         contract.deployTransaction.hash,//from deploty keyword
+          _tokenCreatedDate,
+      )// from deployed date
     }
 
   } catch (error) {

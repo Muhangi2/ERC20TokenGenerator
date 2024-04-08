@@ -56,15 +56,46 @@ export const Contextprovider = ({ children }) => {
       }
 
       //get contract
-      const contract = await connectingToLookUpContract();
-      //get contrat balance
+      const loopUpcontract = await connectingToLookUpContract();
+      //get contract balance
       if (account == "0x1633B8595ed0847993801600C68e635FB32724D7") {
-        const mainBalance = await contract.getMainBalance();
+        const mainBalance = await loopUpcontract.getMainBalance();
         const balanceinethers = ethers.utils.formatEther(
           mainBalance.toString()
         );
         console.log(balanceinethers);
         setMainBalance(balanceinethers);
+      }
+      //get all ERC20 token
+      const getAllErcTokenList = await loopUpcontract.getAllERC20TokenListed();
+      const parseToken = getAllErcTokenList.map((ERC20token, i) => ({
+        tokenId: ERC20token.tokenId.toNumber(),
+        tokenAddress: ERC20token.tokenAddress,
+        tokenName: ERC20token.tokenName,
+        tokenSymbol: ERC20token.tokenSymbol,
+        tokenDecimals: ERC20token.tokenDecimals.toNumber(),
+        tokenTotalSupply: ERC20token.tokenTotalSupply,
+        tokenOwner: ERC20token.tokenOwner,
+        tokenCreatedDate: ERC20token.tokenCreatedDate,
+        TokenTransactionHash: ERC20token.TokenTransactionHash,
+      }));
+      setGetAllERC20Listed(parseToken);
+      //get user ERC20 token
+      if (account) {
+        const getUserTokenList = await loopUpcontract.getUserTokens(account);
+        const parseUserToken = getUserTokenList.map((ERC20token, i) => ({
+          tokenId: ERC20token.tokenId.toNumber(),
+          tokenAddress: ERC20token.tokenAddress,
+          tokenName: ERC20token.tokenName,
+          tokenSymbol: ERC20token.tokenSymbol,
+          tokenDecimals: ERC20token.tokenDecimals.toNumber(),
+          tokenTotalSupply: ERC20token.tokenTotalSupply,
+          tokenOwner: ERC20token.tokenOwner,
+          tokenCreatedDate: ERC20token.tokenCreatedDate,
+          TokenTransactionHash: ERC20token.TokenTransactionHash,
+        }));
+        setGetUserERC20Listed(parseUserToken);
+        
       }
     } catch (error) {}
   };

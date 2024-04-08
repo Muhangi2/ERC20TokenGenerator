@@ -10,7 +10,7 @@ import {
 
 import { ERC20Generator_ABI, ERC20Generator_BYTECODE } from "./constants";
 
-const Context = createContext();
+const StateContext = createContext();
 
 export const Contextprovider = ({ children }) => {
   const [address, setAddress] = useState("");
@@ -54,7 +54,6 @@ export const Contextprovider = ({ children }) => {
         setNativeToken(nativeTokenn);
         console.log(nativeTokenn, "nativetokennn");
       }
-
       //get contract
       const loopUpcontract = await connectingToLookUpContract();
       //get contract balance
@@ -195,7 +194,7 @@ export const Contextprovider = ({ children }) => {
         const account = await checkIfWalletIsConnected();
         console.log(account);
         const web3modal = new web3modal();
-        const connection = await web3modal.connect();
+        const connection = await web3modal.connectWallet();
         const provider = new ethers.providers.Web3Provider(connection);
         const signer = provider.getSigner();
         _deployContract(signer, account, name, symbol, supply);
@@ -243,7 +242,7 @@ export const Contextprovider = ({ children }) => {
     }
   };
   return (
-    <Contextprovider.provider
+    <StateContext.Provider
       value={{
         transferNativeToken,
         donateFunds,
@@ -260,6 +259,6 @@ export const Contextprovider = ({ children }) => {
       }}
     >
       {children}
-    </Contextprovider.provider>
+    </StateContext.Provider>
   );
 };

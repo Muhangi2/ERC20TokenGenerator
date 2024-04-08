@@ -135,23 +135,81 @@ const _deployContract = async (signer, account, name, symbol, supply) => {
     let contract = await factory.deploy(name, symbol, _initialSupply);
     const transaction = await contract.deployed();
 
-    const today=Date.now();
-    let date=new Date(today);
-    const _tokenCreatedDate = date.toLocaleDateString('en-US');
+    const today = Date.now();
+    let date = new Date(today);
+    const _tokenCreatedDate = date.toLocaleDateString("en-US");
 
-    if(contract.address){
+    if (contract.address) {
       await createERC20Token(
-         account,
-         supply,
-         name,
-         symbol,
-         contract.address,//from deployed address
-         contract.deployTransaction.hash,//from deploty keyword
-          _tokenCreatedDate,
-      )// from deployed date
+        account,
+        supply,
+        name,
+        symbol,
+        contract.address, //from deployed address
+        contract.deployTransaction.hash, //from deploty keyword
+        _tokenCreatedDate
+      ); // from deployed date
     }
-
   } catch (error) {
     console.log(error);
   }
 };
+
+const createERC20Token = async (
+  owner,
+  supply,
+  name,
+  symbol,
+  tokenAddress,
+  TokenTransactionHash,
+  tokenCreatedDate
+) => {
+  try {
+    const loopUpcontract = await connectingToLookUpContract();
+    const listingprice = await loopUpcontract.getListingPrice();
+    const transaction = await loopUpcontract.createERC20Token(
+      owner,
+      supply,
+      name,
+      symbol,
+      tokenAddress,
+      TokenTransactionHash,
+      tokenCreatedDate,
+      {
+        value: listingprice.toString(),
+      }
+    );
+    await transaction.wait();
+    console.log("transaction", transaction);
+  } catch (error) {
+    console.log(error);
+  }
+};
+const createERC20 = async (token) => {
+  const { name, symbol, supply } = token;
+  console.log(name, symbol, Number(supply));
+  try {
+    if ((!name, !symbol, !supply)) {
+      console.log(token);
+    } else {
+      console.log(name, symbol, Number(supply));
+      const account = await checkIfWalletIsConnected();
+      console.log(account);
+      const web3modal = new web3modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      _deployContract(signer, account, name, symbol, supply);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const withdrawfunds=async()=>{
+  try{
+
+  }catch(error){
+    console,log(error)
+  }
+}

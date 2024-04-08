@@ -32,15 +32,15 @@ export const Contextprovider = ({ children }) => {
       const balance = await getBalanace(account);
       setBalance(ethers.utils.formatEther(balance.toString()));
       //set nativetoken
-      const nativeToken = await connectingTokenContract();
+      const nativeContract = await connectingTokenContract();
       if (account) {
-        const nativeBalance = await nativeToken.balanceOf(account);
-        const nativeName = await nativeToken.name();
-        const nativeSymbol = await nativeToken.symbol();
-        const nativeDecimals = await nativeToken.decimals();
-        const nativeTotalSupply = await nativeToken.totalSupply();
-        const nativeTokenAdress = await nativeToken.address;
-        const nativeToken = {
+        const nativeBalance = await nativeContract.balanceOf(account);
+        const nativeName = await nativeContract.name();
+        const nativeSymbol = await nativeContract.symbol();
+        const nativeDecimals = await nativeContract.decimals();
+        const nativeTotalSupply = await nativeContract.totalSupply();
+        const nativeTokenAdress = nativeContract.address;
+        const nativeTokenn = {
           balance: ethers.utils.formatEther(nativeBalance.toString(), "ethers"),
           name: nativeName,
           symbol: nativeSymbol,
@@ -51,15 +51,15 @@ export const Contextprovider = ({ children }) => {
           ),
           address: nativeTokenAdress,
         };
-        setNativeToken(nativeToken);
-        console.log(nativeToken, "nativetokennn");
+        setNativeToken(nativeTokenn);
+        console.log(nativeTokenn, "nativetokennn");
       }
 
       //get contract
       const loopUpcontract = await connectingToLookUpContract();
       //get contract balance
       if (account == "0x1633B8595ed0847993801600C68e635FB32724D7") {
-        const mainBalance = await loopUpcontract.getMainBalance();
+        const mainBalance = await loopUpcontract.getContractBalance();
         const balanceinethers = ethers.utils.formatEther(
           mainBalance.toString()
         );
@@ -102,7 +102,48 @@ export const Contextprovider = ({ children }) => {
       const price = ethers.utils.formatEther(listingprice.toString());
       setFee(price);
       //donations
-      
-    } catch (error) {}
+      const allDonation = await loopUpcontract.getDonations();
+      const parseDonation = allDonation.map((donation, i) => ({
+        donationId: donation.donationId.toNumber(),
+        donor: donation.donor,
+        amount: donation.amount,
+      }));
+      setGetAllDonation(parseDonation);
+    } catch (error) {
+      console.log(error);
+    }
   };
+};
+//on every render
+useEffect(() => {
+  fetchInitialData();
+}, []);
+//deploy contract
+const _deployContract = async (signer, account, name, symbol, supply) => {
+  try {
+    const factory = new ethers.ContractFactory(
+      ERC20Generator_ABI,
+      ERC20Generator_BYTECODE,
+      signer
+    );
+    const totalSupply = Number(supply);
+    const _initialSupply = ethers.utils.parseEther(
+      totalSupply.toString(),
+      "ether"
+    );
+
+    let contract = await factory.deploy(name, symbol, _initialSupply);
+    const transaction = await contract.deployed();
+
+    const today=Date.now();
+    let date=new Date(today);
+    const _tokenCreatedDate = date.toLocaleDateString('en-US');
+
+    if(contract.address){
+      await createERC20Token()
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
 };

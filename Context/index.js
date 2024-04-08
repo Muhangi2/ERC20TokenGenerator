@@ -113,103 +113,153 @@ export const Contextprovider = ({ children }) => {
       console.log(error);
     }
   };
-};
-//on every render
-useEffect(() => {
-  fetchInitialData();
-}, []);
-//deploy contract
-const _deployContract = async (signer, account, name, symbol, supply) => {
-  try {
-    const factory = new ethers.ContractFactory(
-      ERC20Generator_ABI,
-      ERC20Generator_BYTECODE,
-      signer
-    );
-    const totalSupply = Number(supply);
-    const _initialSupply = ethers.utils.parseEther(
-      totalSupply.toString(),
-      "ether"
-    );
+  //on every render
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
+  //deploy contract
+  const _deployContract = async (signer, account, name, symbol, supply) => {
+    try {
+      const factory = new ethers.ContractFactory(
+        ERC20Generator_ABI,
+        ERC20Generator_BYTECODE,
+        signer
+      );
+      const totalSupply = Number(supply);
+      const _initialSupply = ethers.utils.parseEther(
+        totalSupply.toString(),
+        "ether"
+      );
 
-    let contract = await factory.deploy(name, symbol, _initialSupply);
-    const transaction = await contract.deployed();
+      let contract = await factory.deploy(name, symbol, _initialSupply);
+      const transaction = await contract.deployed();
 
-    const today = Date.now();
-    let date = new Date(today);
-    const _tokenCreatedDate = date.toLocaleDateString("en-US");
+      const today = Date.now();
+      let date = new Date(today);
+      const _tokenCreatedDate = date.toLocaleDateString("en-US");
 
-    if (contract.address) {
-      await createERC20Token(
-        account,
+      if (contract.address) {
+        await createERC20Token(
+          account,
+          supply,
+          name,
+          symbol,
+          contract.address, //from deployed address
+          contract.deployTransaction.hash, //from deploty keyword
+          _tokenCreatedDate
+        ); // from deployed date
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createERC20Token = async (
+    owner,
+    supply,
+    name,
+    symbol,
+    tokenAddress,
+    TokenTransactionHash,
+    tokenCreatedDate
+  ) => {
+    try {
+      const loopUpcontract = await connectingToLookUpContract();
+      const listingprice = await loopUpcontract.getListingPrice();
+      const transaction = await loopUpcontract.createERC20Token(
+        owner,
         supply,
         name,
         symbol,
-        contract.address, //from deployed address
-        contract.deployTransaction.hash, //from deploty keyword
-        _tokenCreatedDate
-      ); // from deployed date
+        tokenAddress,
+        TokenTransactionHash,
+        tokenCreatedDate,
+        {
+          value: listingprice.toString(),
+        }
+      );
+      await transaction.wait();
+      console.log("transaction", transaction);
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const createERC20Token = async (
-  owner,
-  supply,
-  name,
-  symbol,
-  tokenAddress,
-  TokenTransactionHash,
-  tokenCreatedDate
-) => {
-  try {
-    const loopUpcontract = await connectingToLookUpContract();
-    const listingprice = await loopUpcontract.getListingPrice();
-    const transaction = await loopUpcontract.createERC20Token(
-      owner,
-      supply,
-      name,
-      symbol,
-      tokenAddress,
-      TokenTransactionHash,
-      tokenCreatedDate,
-      {
-        value: listingprice.toString(),
+  };
+  const createERC20 = async (token) => {
+    const { name, symbol, supply } = token;
+    console.log(name, symbol, Number(supply));
+    try {
+      if ((!name, !symbol, !supply)) {
+        console.log(token);
+      } else {
+        console.log(name, symbol, Number(supply));
+        const account = await checkIfWalletIsConnected();
+        console.log(account);
+        const web3modal = new web3modal();
+        const connection = await web3modal.connect();
+        const provider = new ethers.providers.Web3Provider(connection);
+        const signer = provider.getSigner();
+        _deployContract(signer, account, name, symbol, supply);
       }
-    );
-    await transaction.wait();
-    console.log("transaction", transaction);
-  } catch (error) {
-    console.log(error);
-  }
-};
-const createERC20 = async (token) => {
-  const { name, symbol, supply } = token;
-  console.log(name, symbol, Number(supply));
-  try {
-    if ((!name, !symbol, !supply)) {
-      console.log(token);
-    } else {
-      console.log(name, symbol, Number(supply));
-      const account = await checkIfWalletIsConnected();
-      console.log(account);
-      const web3modal = new web3modal();
-      const connection = await web3modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-      const signer = provider.getSigner();
-      _deployContract(signer, account, name, symbol, supply);
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
+  };
+
+  const withdrawfunds = async () => {
+    try {
+      const LookUpContract = await connectingToLookUpContract();
+      const withdraw = LookUpContract.withdraw();
+      await withdraw.wait();
+      console.log("withdraw", withdraw);
+      window.location.reload();
+    } catch (error) {
+      console, log(error);
+    }
+  };
+  const donateFunds = async () => {
+    try {
+      const donateFund = ethers.utils.parseEther("1");
+      const contract = await connectingToLookUpContract();
+      const donate = await contract.donate({ value: donateFund.toString() });
+      await donate.wait();
+      console.log("donate", donate);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const transferNativeToken = async (token) => {
+    try {
+      const { address, tokenNo } = token;
+      console.log(token);
+      const transferamount = ethers.utils.parseEther(tokenNo);
+      const contract = await connectingTokenContract();
+      const transact = await contract.transfer(address, transferamount);
+      await transact.wait();
+      window.location.reload();
+      console.log("transact", transact);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <Contextprovider.provider
+      value={{
+        transferNativeToken,
+        donateFunds,
+        withdrawfunds,
+        createERC20,
+        address,
+        getAllERC20Listed,
+        getUserERC20Listed,
+        getAllDonation,
+        fee,
+        balance,
+        mainBalance,
+        nativeToken,
+      }}
+    >
+      {children}
+    </Contextprovider.provider>
+  );
 };
-
-const withdrawfunds=async()=>{
-  try{
-
-  }catch(error){
-    console,log(error)
-  }
-}

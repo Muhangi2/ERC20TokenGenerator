@@ -95,8 +95,14 @@ export const Contextprovider = ({ children }) => {
           TokenTransactionHash: ERC20token.TokenTransactionHash,
         }));
         setGetUserERC20Listed(parseUserToken);
-        
       }
+
+      // all the listing price
+      const listingprice = await loopUpcontract.getListingPrice();
+      const price = ethers.utils.formatEther(listingprice.toString());
+      setFee(price);
+      //donations
+      
     } catch (error) {}
   };
 };

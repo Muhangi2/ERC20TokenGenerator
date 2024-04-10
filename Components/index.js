@@ -12,13 +12,13 @@ import Swap from "./Swap";
 import Welcome from "./Welcome";
 
 //profile
-import ERC20 from "./ERC20";
-import Profile from "./Profile";
-import ProfileMain from "./ProfileMain";
-import SideBar from "./SideBar";
-import Table from "./Table";
-import TableTwo from "./TableTwo";
-import UserProfile from "./UserProfile";
+import ERC20 from "./Profile/ERC20";
+import Profile from "./Profile/Profile";
+import ProfileMain from "./Profile/ProfileMain";
+import SideBar from "./Profile/SideBar";
+import Table from "./Profile/Table";
+import TableTwo from "./Profile/TableTwo";
+import UserProfile from "./Profile/UserProfile";
 
 export {
   About,

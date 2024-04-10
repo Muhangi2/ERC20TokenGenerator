@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext, createContext } from "react";
+import web3modal from "web3modal";
 import { ethers } from "ethers";
 import {
   checkIfWalletIsConnected,
@@ -262,3 +263,4 @@ export const Contextprovider = ({ children }) => {
     </StateContext.Provider>
   );
 };
+export const StateContextprovider = () => Contextprovider(StateContext);

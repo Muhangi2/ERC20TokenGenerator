@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 
 // import { Contextprovider } from "../Context";
-import { StateContextprovider } from "../Context";
+import { StateContextprovider } from "../Context/index";
 export default function App({ Component, pageProps }) {
   return (
     <>

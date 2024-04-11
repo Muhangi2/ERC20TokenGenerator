@@ -9,7 +9,7 @@ import {
 } from "../Components/index";
 
 // import { Contextprovider } from "../Context/index";
-import { StateContextprovider } from "../Context";
+import { StateContextprovider } from "../Context/index";
 
 const create = () => {
   const [active, setactive] = useState(false);
@@ -42,7 +42,7 @@ const create = () => {
   return (
     <div>
       <Header />
-      {/* {active && <ERC20 setActive={setactive} createERC20={createERC20} />}
+      {active && <ERC20 setActive={setactive} createERC20={createERC20} />}
       {transfer && (
         <Transfer
           setTransfer={setTransfer}
@@ -68,7 +68,7 @@ const create = () => {
           fee={fee}
         />
       </main>
-      <Footer /> */}
+      <Footer />
     </div>
   );
 };

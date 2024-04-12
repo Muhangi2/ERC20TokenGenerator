@@ -19,7 +19,7 @@ const Header = () => {
       link:"",
     }
   ]
-  return <header className="header-one">
+  return <header className="header-one heading">
         <div className="header-menu-area header-area">
           <div className="container">
             <div className="row">

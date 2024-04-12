@@ -8,13 +8,12 @@ import {
   Profile,
 } from "../Components/index";
 
-
 import { StateContext } from "../Context/index";
 import { contextProvider } from "../Context/index";
 
 const create = () => {
-  const contextValue = useContext(StateContext);
-  console.log(contextValue);
+  // const contextValue = useContext(StateContext);
+  // console.log(contextValue);
 
   const [active, setactive] = useState(false);
   const [transfer, setTransfer] = useState(false);
@@ -42,12 +41,12 @@ const create = () => {
     transferNativeToken,
     donateFunds,
   } = contextProvider();
-  console.log(donateFunds, "doantefunds");
+  console.log(donateFunds, "donatefunds");
 
   return (
     <div>
       <Header />
-      {/* {active && <ERC20 setActive={setactive} createERC20={createERC20} />}
+      {active && <ERC20 setActive={setactive} createERC20={createERC20} />}
       {transfer && (
         <Transfer
           setTransfer={setTransfer}
@@ -73,7 +72,7 @@ const create = () => {
           fee={fee}
         />
       </main>
-      <Footer /> */}
+      <Footer />
     </div>
   );
 };

@@ -38,6 +38,13 @@
 /*  1.  Theme default CSS
 /*----------------------------------------*/
 
+/* testing */
+.heading{
+  background-color: greenyellow;
+}
+
+
+
 body {
   font-family: "Nunito", sans-serif;
   font-weight: normal;
@@ -332,9 +339,8 @@ div#preloader {
 
 /*----------------------------------------*/
 
-/*  2 Header bottom area
+/*  2 Header bottom areav
 /*----------------------------------------*/
-
 .header-one {
   position: absolute;
   top: 0;

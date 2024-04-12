@@ -97,9 +97,51 @@ const Footer = () => {
             {/* the third item in row */}
             <div className="col-xl-4 col-lg-4 col-md-4">
               <div className="footer-content last-content rs-mar-0">
-                
+                <h4>Subscribe</h4>
+                <p>
+                  Are you looking for professional advice for your new 
+                  business .Are you looking for professeional advice
+                </p>
+                <div className="subs-fields">
+                  <div className="subscribe-input"> 
+                  <input type="email" className="email form-control width-80" id="sus_email" placeholder="Type email"/>
+                  <button 
+                  type="submit"
+                  id="sus_submit"
+                  className="subs-btn coin-btn"
+                  >Subscribe</button>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+         </div>
+         {/* second column */}
+         <div className="footer-area-bottom">
+          <div className="container"> 
+              <div className="row">
+                <div className="col-xl-6 col-lg-6 col-md-6">
+                  <div className="copyright">
+                  <p> Copyright @2024 
+                  <a href="#" >@eliodcurry@gmail.com</a>
+                  
+                  </p>
+                  </div>
+
+                </div>
+                <div className="col-xl-6 col-lg-6  col-md-6">
+                  <div className="footer-menu">
+                    <ul>
+
+                      {["About","Terms &Customer","Privacy"].map((item,i)=>{
+                        <li>
+                          <a>{item}</a>
+                        </li>
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
           </div>
          </div>
   </footer>;

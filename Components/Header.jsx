@@ -41,8 +41,8 @@ const Header = () => {
                 <div className="header_menu f-right">
                    <nav id="mobile_menu">
                     <ul className="new-nav-class main-menu">
-                      {menuList.map((item, index) => (
-                         <li className="resulta" key={i+1}>
+                      {menuList.map((menu, index) => (
+                         <li className="resulta" key={index+1}>
                           <a href={menu.link}>{menu.name}</a>
                          </li>
                           ))}

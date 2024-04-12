@@ -11,9 +11,9 @@ import {
 
 import { ERC20Generator_ABI, ERC20Generator_BYTECODE } from "./constants";
 
-const StateContext = createContext();
+export const StateContext = createContext();
 
-export const StateContextprovider = ({children}) => {
+const StateContextprovider = ({ children }) => {
   const [address, setAddress] = useState("");
   const [getAllERC20Listed, setGetAllERC20Listed] = useState([]);
   const [getUserERC20Listed, setGetUserERC20Listed] = useState([]);
@@ -263,4 +263,6 @@ export const StateContextprovider = ({children}) => {
     </StateContext.Provider>
   );
 };
-// export const contextProvider = () => useContext(StateContext);
+export default StateContextprovider;
+
+export const contextProvider = () => useContext(StateContext);

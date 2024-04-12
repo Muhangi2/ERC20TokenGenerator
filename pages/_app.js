@@ -1,14 +1,12 @@
 import "../styles/globals.css";
 
-// import { Contextprovider } from "../Context";
-// import { StateContextprovider } from "../Context/index";
-import { contextProvider } from "../Context/context";
+import StateContextprovider from "../Context";
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <contextProvider>
+      <StateContextprovider>
         <Component {...pageProps} />
-      </contextProvider>
+      </StateContextprovider>
 
       <script src="js/vendor/jquery-1.12.4.min.js"></script>
       <script src="js/vendor/modernizr-3.5.0.min.js"></script>

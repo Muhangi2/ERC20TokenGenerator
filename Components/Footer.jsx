@@ -127,7 +127,7 @@ const Footer = () => {
                   
                   </p>
                   </div>
-
+u
                 </div>
                 <div className="col-xl-6 col-lg-6  col-md-6">
                   <div className="footer-menu">

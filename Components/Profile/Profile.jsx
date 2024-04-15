@@ -6,7 +6,6 @@ import {ProfileMain,SideBar} from "../index";
 
 
 const Profile = ({nativeToken,
-setActive,
 transferNativeToken,
 mainBalance,
 balance,
@@ -23,7 +22,7 @@ fee
 }) => {
   //states
   const [open,setOpen]=useState("Dashboard");
-  return <div className="dashboard-area bg-color area-padding-3">
+  return <div className="dashboard-area bg-color area-padding-3" >
       <div className="container">
          <div className="row">
           <SideBar address={address} setOpen={setOpen} open={open} setActive={setActive} setTransfer={setTransfer}/>

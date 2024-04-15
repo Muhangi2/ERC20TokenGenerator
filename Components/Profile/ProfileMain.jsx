@@ -68,10 +68,28 @@ const ProfileMain = ({
          <div className="row dashboard-content">
             {details.map((details,i)=>(
           <div key={i+1} className="col-xl-4 col-lg-4 col-md-6">
-           <div></div>
+           <div className="single-dash-head"> 
+             <div className="dashboard-amount d-flex flex-wrap align-items-center">
+              <div className="amount-content"> 
+            <span className="pro-name">{details.title}</span>
+            <span className="pro-money">{details.value}</span>
+              </div>
+              <div className="invest-tumb"> 
+                 <img src={`img/icon/d${i+1}.png`} alt=""/>
+              </div>
+             </div>
+           </div>
           </div>
             ))}
          </div>
+         {/* another coumn in row */}
+         {open == "Dashboard" ? (
+          <Table title="All Created ERC20 Tokens" tableData={getAllERC20Listed}/>
+         ):open == "Your Token "?(
+          <Table title="Your Tokens" tableData={getUserERC20Listed}/>
+         ):open =="Donation" ?(
+        <TableTwo title="All user donations" tableData={getAllDonation}/>
+         ):("") }
   </div>;
 };
 

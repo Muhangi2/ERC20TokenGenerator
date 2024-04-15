@@ -72,7 +72,7 @@ const create = () => {
           fee={fee}
         />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

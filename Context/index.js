@@ -213,7 +213,7 @@ const StateContextprovider = ({ children }) => {
       console.log("withdraw", withdraw);
       window.location.reload();
     } catch (error) {
-      console, log(error);
+      console.log(error);
     }
   };
   const donateFunds = async () => {

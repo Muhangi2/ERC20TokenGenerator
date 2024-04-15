@@ -31,6 +31,14 @@ const Table = ({tableData,title}) => {
                     }>
                       {token.tokenTransactionHash.slice(0,15)}...
                     </td>
+                     <td onClick={
+                      ()=>navigator.clipboard.writeText(token.tokenAddress)
+                     }>
+                  {token.tokenAddress.slice(0,15)}...
+                     </td>
+                      <td>{token.tokenSupply}</td>
+                      <td>{token.tokenSymbol}</td>
+                      <td>{token.tokenName}</td>
                     </tr>
                   })
                 }

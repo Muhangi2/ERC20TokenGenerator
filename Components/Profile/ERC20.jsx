@@ -23,7 +23,22 @@ const ERC20 = ({setActive,createERC20}) => {
             <input type="text" id="name" className="form-control" placeholder="Name" required onChange={(e)=>handleTokenInfo("name",e)}/>
             <input type="text" id="email" className="form-control" placeholder="Symbol" required onChange={(e)=>handleTokenInfo("symbol",e)}/>
             <input type="number" id="msg_subject" className="form-control" placeholder="total supply" required onChange={(e)=>handleTokenInfo("symbol",e)}/>
-            <button onClick={()=>createERC20(token) }>Create Token</button>
+            <button onClick={()=>createERC20(token) }
+              type="submit"
+              id="submit"
+              className="slide-btn color-btn login-btn"
+            >Create Token</button>
+            <div id="msgSubmit" className="h3 text-center hidden"></div>
+            <div className="clearfix"></div>
+            <div className="clear"></div>
+            <div className="separetor text-center">
+              <span>Create your ERC20 Token</span>
+            </div>
+            <div className="sign-icon">
+                   <div className="acc-not">
+                    with minimum fee of <a>1 matic</a>
+                   </div>
+            </div>
           </div>
         </div>
       </div>

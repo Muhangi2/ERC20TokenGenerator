@@ -8,8 +8,8 @@ const ERC20 = ({setActive,createERC20}) => {
     supply:0,
   })
 
-  const handleTokenInfo=()=>{
-    setToken({...token,[fielName]:e.target.value});
+  const handleTokenInfo=(fieldName,e)=>{
+    setToken({...token,[fieldName]:e?.target?.value});
   }
   return <div className="login-area area-padding fix">
    <div className="login-overlay"></div>
@@ -36,7 +36,7 @@ const ERC20 = ({setActive,createERC20}) => {
             </div>
             <div className="sign-icon">
                    <div className="acc-not">
-                    with minimum fee of <a>1 matic</a>
+                    with minimum fee of <a>1</a> MATIC
                    </div>
             </div>
           </div>

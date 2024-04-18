@@ -23,9 +23,19 @@ const Transfer = ({setTransfer,transferNativeToken}) => {
       <div id="contactForm" className="log-form">
         <input type="text" id="name" className="form-control" placeholder="address" required onChange={(e)=>handleTokenInfo("address",e)}/>
         <input type="text" id="name" className="form-control" placeholder="amount" required onChange={(e)=>handleTokenInfo("tokenNo",e)}/>
-        <button className="">
+        <button 
+        onClick={()=>transferNativeToken(token)}
+        type="submit"
+        id="submit"
+        className="slide-btn color-btn logon-btn">
           Transfer Token
         </button>
+        <div id="msgSubmit" className="h3 text-center hidden"></div>
+        <div className="clearfix"></div>
+        <div className="clear"></div>
+        <div className="separetor text-center">
+  <span>Create Your ERC20 Token</span>
+        </div>
          </div>
      </div>
     </div>

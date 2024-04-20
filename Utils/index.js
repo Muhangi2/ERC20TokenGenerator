@@ -20,6 +20,7 @@ export const checkIfWalletIsConnected = async () => {
     console.log(error);
   }
 };
+
 export const connectWallet = async () => {
   try {
     if (!window.ethereum) return console.log("install metamask Wallet");
@@ -56,7 +57,7 @@ export const connectingToLookUpContract = async () => {
 
 export const getBalanace = async () => {
   try {
-    const web3modal = new web3modal();
+    const web3modal = new Web3Modal();
     const connection = await web3modal.connect();
 
     const provider = new ethers.providers.Web3Provider(connection);
@@ -76,7 +77,7 @@ const fetchTokenContract = (Signerorprovider) =>
   );
 export const connectingTokenContract = async () => {
   try {
-    const web3modal = new web3modal();
+    const web3modal = new Web3Modal();
     const connection = await web3modal.connect();
 
     const provider = new ethers.providers.Web3Provider(connection);

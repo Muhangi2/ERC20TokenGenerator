@@ -15,10 +15,7 @@ const SideBar = ({address,setOpen,open,setActive,setTransfer}) => {
       name:"Donation",
       link:"#"
     },
-    {
-      name:"Logout",
-      link:"#"
-    }
+  
   ]
   return <div className="col-xl-3 col-lg-3 col-md-4">
     <aside className="sidebar">
@@ -49,14 +46,14 @@ const SideBar = ({address,setOpen,open,setActive,setTransfer}) => {
               <a href="#">
                 <BsBoxArrowRight/>
                 <span className="new_space"></span>
-                Create Token
+                 Create Token
               </a>
           </li>
           <li onClick={()=>setTransfer(true)}>
            <a href="#">
             <BsBoxArrowRight/>
             <span className="new_space"></span>
-            Token Transfer
+             Token Transfer
            </a>
           </li>
           </ul>

@@ -34,7 +34,7 @@ const Transfer = ({setTransfer,transferNativeToken}) => {
         <div className="clearfix"></div>
         <div className="clear"></div>
         <div className="separetor text-center">
-  <span>Create Your ERC20 Token</span>
+         <span>Create Your ERC20 Token</span>
         </div>
          </div>
      </div>

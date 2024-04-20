@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, createContext } from "react";
-import web3modal from "web3modal";
+import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import {
   checkIfWalletIsConnected,
@@ -113,10 +113,10 @@ const StateContextprovider = ({ children }) => {
       console.log(error);
     }
   };
-  //on every render
   useEffect(() => {
     fetchInitialData();
   }, []);
+
   //deploy contract
   const _deployContract = async (signer, account, name, symbol, supply) => {
     try {
@@ -194,8 +194,9 @@ const StateContextprovider = ({ children }) => {
         console.log(name, symbol, Number(supply));
         const account = await checkIfWalletIsConnected();
         console.log(account);
-        const web3modal = new web3modal();
-        const connection = await web3modal.connectWallet();
+
+        const web3modal = new Web3Modal();
+        const connection = await Web3Modal.connectWallet();
         const provider = new ethers.providers.Web3Provider(connection);
         const signer = provider.getSigner();
         _deployContract(signer, account, name, symbol, supply);

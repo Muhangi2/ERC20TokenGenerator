@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import web3modal from "web3modal";
+import Web3Modal from "web3modal";
 
 import {
   ERC20Generator_ABI,
@@ -41,7 +41,7 @@ const fetchContract = (Signerorprovider) =>
 
 export const connectingToLookUpContract = async () => {
   try {
-    const web3modal = new web3modal();
+    const web3modal = new Web3Modal();
     const connection = await web3modal.connect();
 
     const provider = new ethers.providers.Web3Provider(connection);

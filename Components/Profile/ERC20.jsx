@@ -22,7 +22,7 @@ console.log(token);
           <div id="contactForm" className="log-form">
             <input type="text" id="name" className="form-control" placeholder="Name" required onChange={(e)=>handleTokenInfo("name",e)}/>
             <input type="text" id="email" className="form-control" placeholder="Symbol" required onChange={(e)=>handleTokenInfo("symbol",e)}/>
-            <input type="number" id="msg_subject" className="form-control" placeholder="total supply" required onChange={(e)=>handleTokenInfo("symbol",e)}/>
+            <input type="number" id="msg_subject" className="form-control" placeholder="total supply" required onChange={(e)=>handleTokenInfo("supply",e)}/>
             <button onClick={()=>createERC20(token)}
               type="submit"
               id="submit"

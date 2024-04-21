@@ -119,6 +119,8 @@ const StateContextprovider = ({ children }) => {
 
   //deploy contract
   const _deployContract = async (signer, account, name, symbol, supply) => {
+    console.log(name, symbol, supply);
+
     try {
       const factory = new ethers.ContractFactory(
         ERC20Generator_ABI,
@@ -131,26 +133,25 @@ const StateContextprovider = ({ children }) => {
         "ether"
       );
 
-      let contract = await factory.deploy(name, symbol, _initialSupply);
-      const transaction = await contract.deployed();
+      let contract = await factory.deploy(_initialSupply, name, symbol);
+      await contract.deployed();
 
-      const today = Date.now();
-      let date = new Date(today);
-      const _tokenCreatedDate = date.toLocaleDateString("en-US");
+      const _tokenCreatedDate = new Date().toISOString();
 
       if (contract.address) {
         await createERC20Token(
           account,
-          supply,
           name,
           symbol,
-          contract.address, //from deployed address
-          contract.deployTransaction.hash, //from deploty keyword
+          supply.toString(),
+          contract.address,
+          contract.deployTransaction.hash,
           _tokenCreatedDate
-        ); // from deployed date
+        );
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      throw error; // Re-throwing the error after logging
     }
   };
 
@@ -196,7 +197,7 @@ const StateContextprovider = ({ children }) => {
         console.log(account);
 
         const web3modal = new Web3Modal();
-        const connection = await Web3Modal.connectWallet();
+        const connection = await web3modal.connect();
         const provider = new ethers.providers.Web3Provider(connection);
         const signer = provider.getSigner();
         _deployContract(signer, account, name, symbol, supply);

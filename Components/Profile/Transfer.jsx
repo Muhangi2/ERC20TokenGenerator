@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import {AiOutlineClose} from "react-icons/ai"
 
 const Transfer = ({setTransfer,transferNativeToken}) => {
+  console.log(transferNativeToken,"i wanna see you")
 
   const [token,setToken] =useState({
     address:"",
@@ -28,7 +29,7 @@ const Transfer = ({setTransfer,transferNativeToken}) => {
         type="submit"
         id="submit"
         className="slide-btn color-btn logon-btn">
-          Transfer Token
+          Transfer Tokenn
         </button>
         <div id="msgSubmit" className="h3 text-center hidden"></div>
         <div className="clearfix"></div>

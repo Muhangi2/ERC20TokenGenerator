@@ -5,18 +5,17 @@ const tokens = (_number) => {
 };
 
 async function main() {
-const _initialSupply = tokens(1000);
+  const _initialSupply = tokens(100);
   const _tokenName = "ELIOD";
   const _tokenSymbol = "ELD";
-  
 
   const ERC20Generator = await hre.ethers.getContractFactory("ERC20Generator");
   const erc20Generator = await ERC20Generator.deploy(
     _initialSupply,
     _tokenName,
-    _tokenSymbol,
-   
+    _tokenSymbol
   );
+
   await erc20Generator.deployed();
   console.log("ERC20Generator deployed to:", erc20Generator.address);
 

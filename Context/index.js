@@ -166,7 +166,8 @@ const StateContextprovider = ({ children }) => {
   ) => {
     try {
       const loopUpcontract = await connectingToLookUpContract();
-      const listingprice = await loopUpcontract.getListingPrice();
+      console.log(loopUpcontract, "looopinggg...");
+      const listingprice = await loopUpcontract.getAllERC20TokenListed();
       const transaction = await loopUpcontract.createERC20Token(
         owner,
         supply,

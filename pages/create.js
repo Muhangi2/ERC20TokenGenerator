@@ -41,8 +41,6 @@ const create = () => {
     transferNativeToken,
     donateFunds,
   } = contextProvider();
-  console.log(donateFunds, "donatefunds");
-  console.log(transferNativeToken, "transferNativeToken");
 
   return (
     <div>

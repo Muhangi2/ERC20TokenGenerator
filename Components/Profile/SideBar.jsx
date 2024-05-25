@@ -42,7 +42,7 @@ const SideBar = ({address,setOpen,open,setActive,setTransfer}) => {
             </a>
           </li>
           )}
-          <li onClick={()=>setActive(true)}>
+          {/* <li onClick={()=>setActive(true)}>
               <a href="#">
                 <BsBoxArrowRight/>
                 <span className="new_space"></span>
@@ -55,7 +55,7 @@ const SideBar = ({address,setOpen,open,setActive,setTransfer}) => {
             <span className="new_space"></span>
              Token Transfer
            </a>
-          </li>
+          </li> */}
           </ul>
         </div>
       </div>

@@ -55,7 +55,6 @@ contract LookUpContract {
         string memory _tokenCreatedDate
     )
         external
-        payable
         returns (
             uint256,
             address,

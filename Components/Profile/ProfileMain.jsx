@@ -14,10 +14,13 @@ const ProfileMain = ({
   fee,
   address,
   getAllERC20Listed,
+  getUserERC20Listed,
   transferNativeToken,
   setActive,
   setTransfer
 }) => {
+  console.log(getUserERC20Listed,"getUserERC20Listed");
+  console.log(getAllERC20Listed,"getAllERC20Listed")
   const details=[
     {
        title:"Created",
@@ -40,7 +43,7 @@ const ProfileMain = ({
   }
   ]
 
-  console.log(getUserERC20Listed)
+
   const contractOwner= 0x1633B8595ed0847993801600C68e635FB32724D7
 
   return <div className="col-xl-9 col-lg-9 col-md-8"> 

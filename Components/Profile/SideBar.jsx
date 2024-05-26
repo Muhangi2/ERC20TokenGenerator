@@ -31,18 +31,19 @@ const SideBar = ({address,setOpen,open,setActive,setTransfer}) => {
         </div>
         <div className="dashboard-menu">
           <ul>
-            {menuList.map((el,i)=>
+            {menuList.map((el,id)=>
           <li onClick={()=>setOpen(el.name)}
            className={open===el.name?"active":""} 
+           key={id}
           >
             <a href="#">
-            <BsBoxArrowRight/>
+              <BsBoxArrowRight/>
               <span className="new_space"></span>
               {el.name}
             </a>
           </li>
           )}
-          {/* <li onClick={()=>setActive(true)}>
+          <li onClick={()=>setActive(true)}>
               <a href="#">
                 <BsBoxArrowRight/>
                 <span className="new_space"></span>
@@ -55,7 +56,7 @@ const SideBar = ({address,setOpen,open,setActive,setTransfer}) => {
             <span className="new_space"></span>
              Token Transfer
            </a>
-          </li> */}
+          </li>
           </ul>
         </div>
       </div>

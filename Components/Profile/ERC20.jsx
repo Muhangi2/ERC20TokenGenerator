@@ -7,10 +7,12 @@ const ERC20 = ({setActive,createERC20}) => {
     symbol:"",
     supply:0,
   })
+
 console.log(token);
   const handleTokenInfo=(fieldName,e)=>{
     setToken({...token,[fieldName]:e?.target?.value});
   }
+  console.log(token);
   return <div className="login-area area-padding fix">
    <div className="login-overlay"></div>
    <div className="container">
@@ -32,7 +34,7 @@ console.log(token);
             <div className="clearfix"></div>
             <div className="clear"></div>
             <div className="separetor text-center">
-              <span>Create your ERC20 Token</span>
+              <span>Create your ERC20 Token form here</span>
             </div>
             <div className="sign-icon">
                    <div className="acc-not">

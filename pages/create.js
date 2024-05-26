@@ -10,6 +10,7 @@ import {
 
 import { StateContext } from "../Context/index";
 import { contextProvider } from "../Context/index";
+// import ConnectToBitski from "web3modal/dist/providers/connectors/bitski";
 
 const create = () => {
   // const contextValue = useContext(StateContext);
@@ -17,7 +18,7 @@ const create = () => {
 
   const [active, setactive] = useState(false);
   const [transfer, setTransfer] = useState(false);
-
+ 
   const {
     address,
     setAddress,
@@ -41,12 +42,13 @@ const create = () => {
     transferNativeToken,
     donateFunds,
   } = contextProvider();
+  console.log(createERC20, "createERC20");
 
   return (
     <div>
       <Header />
-      {/* {active && <ERC20 setActive={setactive} createERC20={createERC20} />}
-      {transfer && (
+      {active && <ERC20 setActive={setactive} createERC20={createERC20} />}
+      {/* {transfer && (
         <Transfer
           setTransfer={setTransfer}
           transferNativeToken={transferNativeToken}

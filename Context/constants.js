@@ -1,11 +1,11 @@
-import ER20Generator from "./ERC20Generator.json"
-import LookUpContract from "./LookUpContract.json"
+import ER20Generator from "./ERC20Generator.json";
+import LookUpContract from "./LookUpContract.json";
 
-export const ERC20Generator_ABI=ER20Generator.abi;
-export const ER20Generator_ADDRESS="0x4F6669cBFEA435425542594025e3bcBa4849671a"
-export const ERC20Generator_BYTECODE=ER20Generator.bytecode;
+export const ERC20Generator_ABI = ER20Generator.abi;
+export const ER20Generator_ADDRESS =
+  "0x755D341ed1bcfe3320189Cc72435b4ec11c48921";
+export const ERC20Generator_BYTECODE = ER20Generator.bytecode;
 
-export const LookUpContract_ABI=LookUpContract.abi;
-export const LookUpContract_ADDRESS="0x7E4C2a0a182fC4AB4E1D13bdcAF86B60B0C206d9"
-
-
+export const LookUpContract_ABI = LookUpContract.abi;
+export const LookUpContract_ADDRESS =
+  "0xd4AC167B997Bc0D401377467Ae6A4f085228fA2F";

@@ -15,6 +15,7 @@ export const checkIfWalletIsConnected = async () => {
 
     const accounts = await window.ethereum.request({ method: "eth_accounts" });
     const firstaccount = accounts[0];
+    
     return firstaccount;
   } catch (error) {
     console.log(error);

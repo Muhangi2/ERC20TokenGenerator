@@ -5,8 +5,8 @@ const tokens = (_number) => {
 };
 
 async function main() {
-  const _initialSupply = tokens(100);
-  const _tokenName = "ELIOD";
+  const _initialSupply = tokens(10000);
+  const _tokenName = "ELD";
   const _tokenSymbol = "ELD";
 
   const ERC20Generator = await hre.ethers.getContractFactory("ERC20Generator");

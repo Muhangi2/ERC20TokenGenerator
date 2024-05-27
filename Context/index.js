@@ -75,7 +75,7 @@ const StateContextprovider = ({ children }) => {
         tokenSymbol: ERC20token.tokenSymbol,
         tokenDecimals: ERC20token.tokenDecimals.toNumber(),
         tokenTotalSupply: ERC20token.tokenTotalSupply,
-        tokenOwner: ERC20token.tokenOwner,
+        tokenr: ERC20token.tokenr,
         tokenCreatedDate: ERC20token.tokenCreatedDate,
         TokenTransactionHash: ERC20token.TokenTransactionHash,
       }));
@@ -90,7 +90,7 @@ const StateContextprovider = ({ children }) => {
           tokenSymbol: ERC20token.tokenSymbol,
           tokenDecimals: ERC20token.tokenDecimals.toNumber(),
           tokenTotalSupply: ERC20token.tokenTotalSupply,
-          tokenOwner: ERC20token.tokenOwner,
+          tokenr: ERC20token.tokenr,
           tokenCreatedDate: ERC20token.tokenCreatedDate,
           TokenTransactionHash: ERC20token.TokenTransactionHash,
         }));
@@ -156,7 +156,7 @@ const StateContextprovider = ({ children }) => {
   };
 
   const createERC20Token = async (
-    owner,
+    r,
     supply,
     name,
     symbol,
@@ -166,10 +166,18 @@ const StateContextprovider = ({ children }) => {
   ) => {
     try {
       const loopUpcontract = await connectingToLookUpContract();
-      console.log(loopUpcontract, "looopinggg...");
+      console.log(loopUpcontract, "looping...");
+
+      // Fetch the listing price
       const listingprice = await loopUpcontract.getAllERC20TokenListed();
+      console.log("Listing price:", listingprice);
+
+      // Ensure listing price is a valid BigNumber or string
+      const price = ethers.BigNumber.from(listingprice.toString());
+
+      // Create the ERC20 token
       const transaction = await loopUpcontract.createERC20Token(
-        owner,
+        r,
         supply,
         name,
         symbol,
@@ -177,15 +185,18 @@ const StateContextprovider = ({ children }) => {
         TokenTransactionHash,
         tokenCreatedDate,
         {
-          value: listingprice.toString(),
+          value: price,
         }
       );
+
+      // Wait for the transaction to be mined
       await transaction.wait();
       console.log("transaction", transaction);
     } catch (error) {
       console.log(error);
     }
   };
+
   const createERC20 = async (token) => {
     const { name, symbol, supply } = token;
     console.log(name, symbol, Number(supply));

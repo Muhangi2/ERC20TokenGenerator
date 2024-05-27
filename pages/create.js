@@ -42,7 +42,7 @@ const create = () => {
     transferNativeToken,
     donateFunds,
   } = contextProvider();
-  console.log(createERC20, "createERC20");
+
 
   return (
     <div>

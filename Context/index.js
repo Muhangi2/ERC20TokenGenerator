@@ -26,13 +26,12 @@ const StateContextprovider = ({ children }) => {
   ///fuction to get alll the data
   const fetchInitialData = async () => {
     try {
-      //get user account
       const account = await checkIfWalletIsConnected();
       setAddress(account);
-      //get user balance
+  
       const balance = await getBalanace(account);
       setBalance(ethers.utils.formatEther(balance.toString()));
-      //set nativetoken
+  
       const nativeContract = await connectingTokenContract();
       if (account) {
         const nativeBalance = await nativeContract.balanceOf(account);
@@ -70,14 +69,13 @@ const StateContextprovider = ({ children }) => {
       const getAllErcTokenList = await loopUpcontract.getAllERC20TokenListed();
       const parseToken = getAllErcTokenList.map((ERC20token, i) => ({
         tokenId: ERC20token.tokenId.toNumber(),
-        tokenAddress: ERC20token.tokenAddress,
+        owner: ERC20token.owner,
+        tokenSupply: ERC20token.tokenSupply,
         tokenName: ERC20token.tokenName,
         tokenSymbol: ERC20token.tokenSymbol,
-        tokenDecimals: ERC20token.tokenDecimals.toNumber(),
-        tokenTotalSupply: ERC20token.tokenTotalSupply,
-        tokenr: ERC20token.tokenr,
+        tokenAddress: ERC20token.tokenAddress,
+        tokenTransactionHash: ERC20token.TokenTransactionHash,
         tokenCreatedDate: ERC20token.tokenCreatedDate,
-        TokenTransactionHash: ERC20token.TokenTransactionHash,
       }));
       setGetAllERC20Listed(parseToken);
       //get user ERC20 token

@@ -3,28 +3,28 @@
 pragma solidity ^0.8.19;
 
 contract LookUpContract {
-    struct ER20Token {
+    struct ERC20Token {
         uint256 tokenId;
         address owner;
         string tokenSupply;
         string tokenName;
         string tokenSymbol;
         string tokenAddress;
-        string TokenTransactionHash;
+        string tokenTransactionHash;
         string tokenCreatedDate;
     }
+
     struct Donation {
         uint256 donationId;
         address donor;
         uint256 amount;
-        // uint256 tokenId;
-        // string donationDate;
     }
-    address payable contractOwner =
-        payable(0x1633B8595ed0847993801600C68e635FB32724D7);
+
+    address payable public contractOwner = payable(0x1633B8595ed0847993801600C68e635FB32724D7);
     uint256 public listingPrice = 0.025 ether;
-    //mapping
-    mapping(uint256 => ER20Token) private erc20Tokens;
+
+    // Mappings
+    mapping(uint256 => ERC20Token) private erc20Tokens;
     mapping(uint256 => Donation) private donations;
 
     uint256 public _tokenIndex;
@@ -32,19 +32,17 @@ contract LookUpContract {
 
     event DonationReceived(address indexed donor, uint256 amount);
     event ERC20TokenListed(
-        uint256 indexed,
+        uint256 indexed tokenId,
         address indexed owner,
-        string indexed token
+        string tokenAddress
     );
 
     modifier onlyOwner() {
-        require(
-            msg.sender == contractOwner,
-            "Only owner can call this function"
-        );
+        require(msg.sender == contractOwner, "Only owner can call this function");
         _;
     }
-    //creating a new ERC20 token
+
+    // Creating a new ERC20 token
     function createERC20Token(
         address _owner,
         string memory _tokenSupply,
@@ -66,7 +64,7 @@ contract LookUpContract {
     {
         _tokenIndex++;
         uint256 _tokenId = _tokenIndex;
-        ER20Token storage erc20Token = erc20Tokens[_tokenId];
+        ERC20Token storage erc20Token = erc20Tokens[_tokenId];
 
         erc20Token.owner = _owner;
         erc20Token.tokenId = _tokenId;
@@ -74,10 +72,10 @@ contract LookUpContract {
         erc20Token.tokenSymbol = _tokenSymbol;
         erc20Token.tokenName = _tokenName;
         erc20Token.tokenAddress = _tokenAddress;
-        erc20Token.TokenTransactionHash = _tokenTransactionHash;
+        erc20Token.tokenTransactionHash = _tokenTransactionHash;
         erc20Token.tokenCreatedDate = _tokenCreatedDate;
 
-        emit ERC20TokenListed(_tokenId, _owner, _tokenName);
+        emit ERC20TokenListed(_tokenId, _owner, _tokenAddress);
 
         return (
             _tokenId,
@@ -89,22 +87,20 @@ contract LookUpContract {
         );
     }
 
-    function getAllERC20TokenListed() public view returns (ER20Token[] memory) {
+    function getAllERC20TokenListed() public view returns (ERC20Token[] memory) {
         uint256 itemCount = _tokenIndex;
-        uint256 currentIndex = 0;
-        ER20Token[] memory items = new ER20Token[](itemCount);
-        for (uint256 i = 1; i <= itemCount; i++) {
+        ERC20Token[] memory items = new ERC20Token[](itemCount);
+
+        for (uint256 i = 0; i < itemCount; i++) {
             uint256 currentId = i + 1;
-            ER20Token storage currentItem = erc20Tokens[currentId];
-            items[currentIndex] = currentItem;
-            currentIndex += 1;
+            ERC20Token storage currentItem = erc20Tokens[currentId];
+            items[i] = currentItem;
         }
         return items;
     }
-    //fetting single ERC20 token
-    function getSingleERC20Token(
-        uint256 _tokenId
-    )
+
+    // Fetching single ERC20 token
+    function getSingleERC20Token(uint256 _tokenId)
         external
         view
         returns (
@@ -118,7 +114,7 @@ contract LookUpContract {
             string memory
         )
     {
-        ER20Token memory erc20Token = erc20Tokens[_tokenId];
+        ERC20Token memory erc20Token = erc20Tokens[_tokenId];
 
         return (
             erc20Token.tokenId,
@@ -127,57 +123,58 @@ contract LookUpContract {
             erc20Token.tokenName,
             erc20Token.tokenSymbol,
             erc20Token.tokenAddress,
-            erc20Token.TokenTransactionHash,
+            erc20Token.tokenTransactionHash,
             erc20Token.tokenCreatedDate
         );
     }
-    //get usertokens
-    function getUserTokens(
-        address _owner
-    ) external view returns (ER20Token[] memory) {
-        uint256 totalitemcount = _tokenIndex;
+
+    // Get user tokens
+    function getUserTokens(address _owner) external view returns (ERC20Token[] memory) {
+        uint256 totalItemCount = _tokenIndex;
         uint256 itemCount = 0;
         uint256 currentIndex = 0;
 
-        for (uint256 i = 0; i < totalitemcount; i++) {
+        for (uint256 i = 1; i <= totalItemCount; i++) {
             if (erc20Tokens[i].owner == _owner) {
                 itemCount += 1;
             }
         }
 
-        ER20Token[] memory items = new ER20Token[](itemCount);
+        ERC20Token[] memory items = new ERC20Token[](itemCount);
 
-        for (uint256 i = 0; i < totalitemcount; i++) {
-            if (erc20Tokens[i + 1].owner == _owner) {
-                uint256 currentId = i + 1;
-                ER20Token storage currentItem = erc20Tokens[currentId];
+        for (uint256 i = 1; i <= totalItemCount; i++) {
+            if (erc20Tokens[i].owner == _owner) {
+                ERC20Token storage currentItem = erc20Tokens[i];
                 items[currentIndex] = currentItem;
                 currentIndex += 1;
             }
         }
         return items;
     }
-    ///get listing price
+
+    // Get listing price
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
     }
-    //set updating  price
-    function updatingListPrice(
-        uint256 _listingPrice,
-        address _owner
-    ) public payable onlyOwner {
-        require(contractOwner == _owner, "Only owner can call this function");
+
+    // Updating listing price
+    function updatingListPrice(uint256 _listingPrice) public payable onlyOwner {
         listingPrice = _listingPrice;
     }
+
+    // Withdraw funds
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
         require(balance > 0, "Contract has no balance");
         payable(contractOwner).transfer(balance);
     }
+
+    // Get contract balance
     function getContractBalance() external view onlyOwner returns (uint256) {
         return address(this).balance;
     }
-    //donation now
+
+    // Donation functionality
     function donate() public payable {
         require(msg.value > 0, "Donation amount must be greater than 0");
         _donationIndex++;
@@ -188,15 +185,15 @@ contract LookUpContract {
         donation.amount = msg.value;
         emit DonationReceived(msg.sender, msg.value);
     }
+
     function getDonations() public view onlyOwner returns (Donation[] memory) {
         uint256 itemCount = _donationIndex;
-        uint256 currentIndex = 0;
         Donation[] memory items = new Donation[](itemCount);
-        for (uint256 i = 1; i <= itemCount; i++) {
+
+        for (uint256 i = 0; i < itemCount; i++) {
             uint256 currentId = i + 1;
             Donation storage currentItem = donations[currentId];
-            items[currentIndex] = currentItem;
-            currentIndex += 1;
+            items[i] = currentItem;
         }
         return items;
     }

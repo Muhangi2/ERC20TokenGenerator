@@ -15,7 +15,7 @@ export const checkIfWalletIsConnected = async () => {
 
     const accounts = await window.ethereum.request({ method: "eth_accounts" });
     const firstaccount = accounts[0];
-    
+
     return firstaccount;
   } catch (error) {
     console.log(error);
@@ -50,6 +50,7 @@ export const connectingToLookUpContract = async () => {
     const signer = provider.getSigner();
 
     const contrat = fetchContract(signer);
+    console.log(await contrat.getAllERC20TokenListed());
     return contrat;
   } catch (error) {
     console.log(error);

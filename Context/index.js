@@ -3,7 +3,6 @@ import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import {
   checkIfWalletIsConnected,
-  connectWallet,
   connectingToLookUpContract,
   connectingTokenContract,
   getBalanace,
@@ -26,90 +25,91 @@ const StateContextprovider = ({ children }) => {
   ///fuction to get alll the data
   const fetchInitialData = async () => {
     try {
-      const account = await checkIfWalletIsConnected();
-      setAddress(account);
-  
-      const balance = await getBalanace(account);
-      setBalance(ethers.utils.formatEther(balance.toString()));
-  
-      const nativeContract = await connectingTokenContract();
-      if (account) {
-        const nativeBalance = await nativeContract.balanceOf(account);
-        const nativeName = await nativeContract.name();
-        const nativeSymbol = await nativeContract.symbol();
-        const nativeDecimals = await nativeContract.decimals();
-        const nativeTotalSupply = await nativeContract.totalSupply();
-        const nativeTokenAdress = nativeContract.address;
-        const nativeTokenn = {
-          balance: ethers.utils.formatEther(nativeBalance.toString(), "ethers"),
-          name: nativeName,
-          symbol: nativeSymbol,
-          decimals: nativeDecimals,
-          totalSupply: ethers.utils.formatEther(
-            nativeTotalSupply.toString(),
-            "ethers"
-          ),
-          address: nativeTokenAdress,
-        };
-        setNativeToken(nativeTokenn);
-        console.log(nativeTokenn, "nativetokennn");
-      }
-      //get contract
-      const loopUpcontract = await connectingToLookUpContract();
-      //get contract balance
-      if (account == "0x1633B8595ed0847993801600C68e635FB32724D7") {
-        const mainBalance = await loopUpcontract.getContractBalance();
-        const balanceinethers = ethers.utils.formatEther(
-          mainBalance.toString()
-        );
-        console.log(balanceinethers);
-        setMainBalance(balanceinethers);
-      }
-      //get all ERC20 token
-      const getAllErcTokenList = await loopUpcontract.getAllERC20TokenListed();
-      const parseToken = getAllErcTokenList.map((ERC20token, i) => ({
-        tokenId: ERC20token.tokenId.toNumber(),
-        owner: ERC20token.owner,
-        tokenSupply: ERC20token.tokenSupply,
-        tokenName: ERC20token.tokenName,
-        tokenSymbol: ERC20token.tokenSymbol,
-        tokenAddress: ERC20token.tokenAddress,
-        tokenTransactionHash: ERC20token.TokenTransactionHash,
-        tokenCreatedDate: ERC20token.tokenCreatedDate,
-      }));
-      setGetAllERC20Listed(parseToken);
-      //get user ERC20 token
-      if (account) {
-        const getUserTokenList = await loopUpcontract.getUserTokens(account);
-        const parseUserToken = getUserTokenList.map((ERC20token, i) => ({
-          tokenId: ERC20token.tokenId.toNumber(),
-          tokenAddress: ERC20token.tokenAddress,
-          tokenName: ERC20token.tokenName,
-          tokenSymbol: ERC20token.tokenSymbol,
-          tokenDecimals: ERC20token.tokenDecimals.toNumber(),
-          tokenTotalSupply: ERC20token.tokenTotalSupply,
-          tokenr: ERC20token.tokenr,
-          tokenCreatedDate: ERC20token.tokenCreatedDate,
-          TokenTransactionHash: ERC20token.TokenTransactionHash,
-        }));
-        setGetUserERC20Listed(parseUserToken);
-      }
+  const account = await checkIfWalletIsConnected();
+  setAddress(account);
 
-      // all the listing price
-      const listingprice = await loopUpcontract.getListingPrice();
-      const price = ethers.utils.formatEther(listingprice.toString());
-      setFee(price);
-      //donations
-      const allDonation = await loopUpcontract.getDonations();
-      const parseDonation = allDonation.map((donation, i) => ({
-        donationId: donation.donationId.toNumber(),
-        donor: donation.donor,
-        amount: donation.amount,
-      }));
-      setGetAllDonation(parseDonation);
-    } catch (error) {
-      console.log(error);
-    }
+  const balance = await getBalanace(account);
+  setBalance(ethers.utils.formatEther(balance.toString()));
+
+  const nativeContract = await connectingTokenContract();
+  if (account) {
+    const nativeBalance = await nativeContract.balanceOf(account);
+    const nativeName = await nativeContract.name();
+    const nativeSymbol = await nativeContract.symbol();
+    const nativeDecimals = await nativeContract.decimals();
+    const nativeTotalSupply = await nativeContract.totalSupply();
+    const nativeTokenAdress = nativeContract.address;
+    const nativeTokenn = {
+      balance: ethers.utils.formatUnits(nativeBalance.toString(), nativeDecimals),
+      name: nativeName,
+      address: nativeTokenAdress,
+      symbol: nativeSymbol,
+      decimals: nativeDecimals,
+      totalSupply: ethers.utils.formatUnits(nativeTotalSupply.toString(), nativeDecimals),
+    };
+    setNativeToken(nativeTokenn);
+    console.log(nativeContract, "nativetokennn");
+  }
+
+  // Get contract instance
+  const loopUpcontract = await connectingToLookUpContract();
+
+  // Get contract balance
+  if (account === "0x1633B8595ed0847993801600C68e635FB32724D7") {
+    const contractBalance = await loopUpcontract.getContractBalance();
+    const mainBalance = ethers.utils.formatUnits(contractBalance.toString());
+    console.log(mainBalance);
+    setMainBalance(mainBalance);
+  }
+
+  // Get all ERC20 tokens
+  const getAllErcTokenList = await loopUpcontract.getAllERC20TokenListed();
+  console.log(getAllErcTokenList, "all token");
+  const parseToken = getAllErcTokenList.map((ERC20token) => ({
+    tokenId: ERC20token.tokenId.toNumber(),
+    owner: ERC20token.owner,
+    tokenSupply: ERC20token.tokenSupply,
+    tokenName: ERC20token.tokenName,
+    tokenSymbol: ERC20token.tokenSymbol,
+    tokenAddress: ERC20token.tokenAddress,
+    tokenTransactionHash: ERC20token.TokenTransactionHash,
+    tokenCreatedDate: ERC20token.tokenCreatedDate,
+  }));
+  setGetAllERC20Listed(parseToken);
+
+  // Get user ERC20 tokens
+  if (account) {
+    const getUserTokenList = await loopUpcontract.getUserTokens(account);
+    const parseUserToken = getUserTokenList.map((ERC20token) => ({
+      tokenId: ERC20token.tokenId.toNumber(),
+      owner: ERC20token.owner,
+      tokenSupply: ERC20token.tokenSupply,
+      tokenName: ERC20token.tokenName,
+      tokenSymbol: ERC20token.tokenSymbol,
+      tokenAddress: ERC20token.tokenAddress,
+      tokenTransactionHash: ERC20token.TokenTransactionHash,
+      tokenCreatedDate: ERC20token.tokenCreatedDate,
+    }));
+    setGetUserERC20Listed(parseUserToken);
+  }
+
+  // Listing price
+  const listingprice = await loopUpcontract.getListingPrice();
+  const price = ethers.utils.formatEther(listingprice.toString());
+  setFee(price);
+
+  // Donations
+  const allDonation = await loopUpcontract.getDonations();
+  const parseDonation = allDonation.map((donation) => ({
+    donationId: donation.donationId.toNumber(),
+    donor: donation.donor,
+    amount: ethers.utils.formatUnits(donation.amount.toString(), "ether"),
+  }));
+  setGetAllDonation(parseDonation);
+} catch (error) {
+  console.log(error);
+}
+
   };
   useEffect(() => {
     fetchInitialData();
@@ -154,7 +154,6 @@ const StateContextprovider = ({ children }) => {
   };
 
   const createERC20Token = async (
-    r,
     supply,
     name,
     symbol,

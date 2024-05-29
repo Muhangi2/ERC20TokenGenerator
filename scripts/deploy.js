@@ -18,6 +18,13 @@ async function main() {
 
   await erc20Generator.deployed();
   console.log("ERC20Generator deployed to:", erc20Generator.address);
+  console.log("ERC20Generator deployed to:", erc20Generator.deployTransaction.hash);
+  console.log("ERC20Generator deployed to:", erc20Generator.deployTransaction.gasPrice.toString());
+  console.log("ERC20Generator deployed to:", erc20Generator.deployTransaction.gasLimit.toString());
+  console.log("ERC20Generator deployed to:", erc20Generator.deployTransaction.from);
+  console.log("ERC20Generator deployed to:", erc20Generator.deployTransaction.to);
+  console.log("ERC20Generator deployed to:", erc20Generator.deployTransaction.value.toString());
+
 
   const LookUpContract = await hre.ethers.getContractFactory("LookUpContract");
   const lookUpContract = await LookUpContract.deploy();

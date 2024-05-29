@@ -8,11 +8,9 @@ const ERC20 = ({setActive,createERC20}) => {
     supply:0,
   })
 
-console.log(token);
   const handleTokenInfo=(fieldName,e)=>{
     setToken({...token,[fieldName]:e?.target?.value});
   }
-  console.log(token);
   return <div className="login-area area-padding fix">
    <div className="login-overlay"></div>
    <div className="container">

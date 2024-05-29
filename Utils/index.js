@@ -49,9 +49,8 @@ export const connectingToLookUpContract = async () => {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
-    const contrat = fetchContract(signer);
-    console.log(await contrat.getAllERC20TokenListed());
-    return contrat;
+    const contract = fetchContract(signer);
+    return contract;
   } catch (error) {
     console.log(error);
   }
@@ -64,6 +63,10 @@ export const getBalanace = async () => {
 
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
+  //   const balance = await signer.getBalance();
+  //   const balanceInEther = ethers.utils.formatEther(balance);
+  // console.log('Balance in Wei:', balance.toString());
+  // console.log('Balance in Ether:', balanceInEther);
     return await signer.getBalance();
   } catch (error) {
     console.log(error);
@@ -83,9 +86,11 @@ export const connectingTokenContract = async () => {
     const connection = await web3modal.connect();
 
     const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
 
+    const signer = provider.getSigner();
+  
     const contract = fetchTokenContract(signer);
+
     return contract;
   } catch (error) {
     console.log(error);

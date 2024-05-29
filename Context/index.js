@@ -122,7 +122,7 @@ const StateContextprovider = ({ children }) => {
     }
   };
 
-  
+
   useEffect(() => {
     fetchInitialData();
   }, []);
@@ -217,7 +217,7 @@ const StateContextprovider = ({ children }) => {
       } else {
         console.log(name, symbol, Number(supply));
         const account = await checkIfWalletIsConnected();
-        console.log(account);
+
 
         const web3modal = new Web3Modal();
         const connection = await web3modal.connect();

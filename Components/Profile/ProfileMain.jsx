@@ -44,7 +44,7 @@ const ProfileMain = ({
   ]
 
 
-  const contractOwner= 0x1633B8595ed0847993801600C68e635FB32724D7
+  const contractOwner=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
   return <div className="col-xl-9 col-lg-9 col-md-8"> 
          <div className="row user-dashboard">
@@ -52,7 +52,7 @@ const ProfileMain = ({
             <div className="user-top"> 
               <div className="user-balance">
                 <span> Your Balance</span>
-                <div className="main-bal"> {balance?.slice(1,7)}Matic</div>
+                <div className="main-bal"> {balance?.slice(0,10)}Matic</div>
               </div>
               <div className="userboard-btn">
                 <a className="user-btn coin-btn" onClick={()=>donateFunds()}>Donate 1 MATIC</a>
